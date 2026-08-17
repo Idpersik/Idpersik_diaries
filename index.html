@@ -2,248 +2,794 @@
 <html lang="ru">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Inferno Books</title>
+<title>Inferno Books</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
 
-        body {
-            background: #0b090a;
-            color: #f5f1f2;
-            font-family: Arial, Helvetica, sans-serif;
-            min-height: 100vh;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        header {
-            padding: 70px 25px 55px;
-            text-align: center;
-            background:
-                radial-gradient(circle at top, #4a1024 0%, #1c0b11 38%, #0b090a 75%);
-            border-bottom: 1px solid #431323;
-        }
+:root {
+    --bg: #070708;
+    --panel: #0d0d0f;
+    --panel2: #121013;
+    --border: #4b1528;
+    --accent: #8c1741;
+    --accent2: #b32658;
+    --text: #f5f2f3;
+    --muted: #ba8d9a;
+}
 
-        header h1 {
-            font-size: clamp(34px, 6vw, 64px);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-        }
+body {
+    background:
+        radial-gradient(circle at 50% 0%, #19080e 0%, transparent 30%),
+        var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+}
 
-        .subtitle {
-            margin-top: 14px;
-            color: #bda9af;
-            font-size: 16px;
-        }
 
-        main {
-            width: min(1200px, 92%);
-            margin: 0 auto;
-            padding: 50px 0 80px;
-        }
+/* =========================
+   ШАПКА
+========================= */
 
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
+.hero {
+    height: 320px;
 
-        .topbar h2 {
-            font-size: 28px;
-        }
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(0,0,0,.08),
+            rgba(0,0,0,.22)
+        ),
+        url("header-ghostface.png");
 
-        .search {
-            width: 280px;
-            max-width: 100%;
-            padding: 13px 16px;
-            border-radius: 30px;
-            border: 1px solid #49202d;
-            background: #151013;
-            color: white;
-            outline: none;
-        }
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 
-        .filters {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 35px;
-        }
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        .filter {
-            padding: 9px 15px;
-            border-radius: 30px;
-            border: 1px solid #49202d;
-            background: #151013;
-            color: #ddd;
-            cursor: pointer;
-        }
+    text-align: center;
 
-        .filter:hover {
-            background: #6b1834;
-            color: white;
-        }
+    border-bottom: 1px solid #52132a;
 
-        .library {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-            gap: 28px;
-        }
+    position: relative;
+}
 
-        .book {
-            background: #151013;
-            border: 1px solid #29181e;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: 0.25s;
-        }
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
 
-        .book:hover {
-            transform: translateY(-7px);
-            border-color: #7e2342;
-            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.4);
-        }
+.hero h1 {
+    font-size: clamp(55px, 8vw, 105px);
+    letter-spacing: 5px;
+    font-weight: 900;
 
-        .cover {
-            aspect-ratio: 2 / 3;
-            background:
-                linear-gradient(145deg, #671d39, #17080d);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            text-align: center;
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
+    text-shadow:
+        0 3px 5px rgba(0,0,0,.9),
+        0 0 30px rgba(0,0,0,.8);
+}
 
-        .book-info {
-            padding: 17px;
-        }
+.hero p {
+    margin-top: 13px;
 
-        .book-title {
-            font-size: 19px;
-            margin-bottom: 6px;
-        }
+    font-size: clamp(17px, 2vw, 25px);
+    font-weight: 600;
 
-        .author {
-            color: #a9959b;
-            font-size: 14px;
-            margin-bottom: 14px;
-        }
+    color: #efcbd6;
 
-        .tags {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
+    text-shadow:
+        0 2px 5px #000,
+        0 0 15px #000;
+}
 
-        .tag {
-            background: #421426;
-            color: #e6ccd5;
-            padding: 5px 9px;
-            border-radius: 20px;
-            font-size: 11px;
-        }
+.hero-decoration {
+    margin-top: 23px;
 
-        .read {
-            display: block;
-            width: 100%;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            background: #871f46;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
+    color: #a5224d;
 
-        .read:hover {
-            background: #a92856;
-        }
+    font-size: 22px;
 
-        footer {
-            padding: 30px;
-            text-align: center;
-            color: #716269;
-            border-top: 1px solid #201417;
-        }
-    </style>
+    letter-spacing: 10px;
+}
+
+
+/* =========================
+   ОСНОВНОЙ КОНТЕНТ
+========================= */
+
+main {
+    max-width: 1400px;
+    width: 92%;
+    margin: auto;
+    padding: 48px 0 70px;
+}
+
+
+/* =========================
+   ЗАГОЛОВОК + ПОИСК
+========================= */
+
+.library-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 30px;
+
+    margin-bottom: 32px;
+}
+
+.library-head h2 {
+    font-size: 36px;
+}
+
+.search-wrapper {
+    position: relative;
+    width: 390px;
+    max-width: 100%;
+}
+
+.search {
+    width: 100%;
+
+    padding: 16px 48px 16px 20px;
+
+    border-radius: 40px;
+
+    background: #100d0f;
+
+    border: 1px solid #5b1830;
+
+    color: white;
+
+    font-size: 15px;
+
+    outline: none;
+}
+
+.search:focus {
+    border-color: #a52551;
+}
+
+.search-icon {
+    position: absolute;
+    right: 19px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #a6969b;
+
+    font-size: 20px;
+}
+
+
+/* =========================
+   ФИЛЬТРЫ
+========================= */
+
+.filters {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 15px;
+
+    margin-bottom: 40px;
+}
+
+.filter {
+    background: #0c0b0d;
+
+    color: #eee;
+
+    border: 1px solid #681a36;
+
+    border-radius: 40px;
+
+    padding: 12px 22px;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.filter:hover,
+.filter.active {
+    background: #8c1741;
+
+    border-color: #b72c5e;
+}
+
+
+/* =========================
+   КНИГИ
+========================= */
+
+.library {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(500px, 1fr));
+
+    gap: 24px;
+}
+
+
+/* карточка */
+
+.book {
+    min-height: 370px;
+
+    display: grid;
+
+    grid-template-columns: 230px 1fr;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0e0d0f,
+            #09090a
+        );
+
+    border: 1px solid #4b1729;
+
+    border-radius: 17px;
+
+    overflow: hidden;
+
+    transition: .25s;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.25);
+}
+
+.book:hover {
+    transform: translateY(-5px);
+
+    border-color: #8c2348;
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.45);
+}
+
+
+/* обложка */
+
+.cover {
+    width: 100%;
+    height: 100%;
+
+    min-height: 370px;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+/* правая часть карточки */
+
+.book-info {
+    padding: 48px 32px 28px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* название */
+
+.book-title {
+    font-size: 29px;
+
+    margin-bottom: 12px;
+}
+
+
+/* автор */
+
+.author {
+    color: #c18496;
+
+    font-size: 18px;
+
+    margin-bottom: 26px;
+}
+
+
+/* жанры */
+
+.tags {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 9px;
+}
+
+.tag {
+    border: 1px solid #721d3c;
+
+    padding: 10px 16px;
+
+    border-radius: 30px;
+
+    font-size: 14px;
+
+    background: #0b0a0c;
+
+    color: #eee;
+}
+
+
+/* кнопка */
+
+.read {
+    margin-top: auto;
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: 0;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #761334,
+            #a21e4c
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.read:hover {
+    filter: brightness(1.18);
+}
+
+
+/* =========================
+   COMING SOON
+========================= */
+
+.coming-cover {
+    width: 100%;
+
+    height: 100%;
+
+    min-height: 370px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        radial-gradient(circle, #3d101f, #18080e);
+
+    color: white;
+
+    font-size: 31px;
+
+    text-align: center;
+
+    letter-spacing: 5px;
+
+    font-weight: bold;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    border-top: 1px solid #30111c;
+
+    padding: 35px 20px;
+
+    text-align: center;
+
+    color: #76676c;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   ТЕЛЕФОН
+========================= */
+
+@media(max-width: 800px) {
+
+    .hero {
+        height: 250px;
+
+        background-position: center;
+    }
+
+    .hero h1 {
+        font-size: 46px;
+    }
+
+    .library-head {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .search-wrapper {
+        width: 100%;
+    }
+
+    .library {
+        grid-template-columns: 1fr;
+    }
+
+    .book {
+        grid-template-columns: 145px 1fr;
+
+        min-height: 280px;
+    }
+
+    .cover,
+    .coming-cover {
+        min-height: 280px;
+    }
+
+    .book-info {
+        padding: 25px 18px;
+    }
+
+    .book-title {
+        font-size: 22px;
+    }
+
+}
+
+
+@media(max-width: 520px) {
+
+    .hero {
+        height: 210px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+        letter-spacing: 2px;
+    }
+
+    .hero p {
+        font-size: 14px;
+    }
+
+    main {
+        width: 94%;
+    }
+
+    .library {
+        display: block;
+    }
+
+    .book {
+        display: block;
+
+        margin-bottom: 25px;
+    }
+
+    .cover {
+        width: 100%;
+
+        height: auto;
+
+        max-height: none;
+
+        object-fit: contain;
+
+        background: black;
+    }
+
+    .coming-cover {
+        height: 330px;
+    }
+
+    .book-info {
+        min-height: 240px;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-<header>
-    <h1>INFERNO BOOKS</h1>
-    <p class="subtitle">Я знаю, что вы читали прошлым летом</p>
+
+<!-- ШАПКА -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <h1>INFERNO BOOKS</h1>
+
+        <p>
+            Я знаю, что вы читали прошлым летом
+        </p>
+
+        <div class="hero-decoration">
+            ─── ☠ ───
+        </div>
+
+    </div>
+
 </header>
+
+
+<!-- БИБЛИОТЕКА -->
 
 <main>
 
-    <div class="topbar">
+    <div class="library-head">
+
         <h2>Библиотека</h2>
-        <input class="search" type="text" placeholder="Поиск книги...">
-  
+
+        <div class="search-wrapper">
+
+            <input
+                id="search"
+                class="search"
+                type="text"
+                placeholder="Поиск книги..."
+            >
+
+            <span class="search-icon">⌕</span>
+
+        </div>
+
     </div>
-<div class="filters">
-    <button class="filter">Все</button>
-    <button class="filter">Триллеры/детективы</button>
-    <button class="filter">Хорроры</button>
-    <button class="filter">Сплаттерпанки</button>
-    <button class="filter">Дарк Романы</button>
-    <button class="filter">Дарк Фэнтези</button>
-</div>
-   
+
+
+    <!-- КАТЕГОРИИ -->
+
+    <div class="filters">
+
+        <button class="filter active" data-category="all">
+            Все
+        </button>
+
+        <button class="filter" data-category="thriller">
+            Триллеры/детективы
+        </button>
+
+        <button class="filter" data-category="horror">
+            Хорроры
+        </button>
+
+        <button class="filter" data-category="splatterpunk">
+            Сплаттерпанки
+        </button>
+
+        <button class="filter" data-category="dark-romance">
+            Дарк Романы
+        </button>
+
+        <button class="filter" data-category="dark-fantasy">
+            Дарк Фэнтези
+        </button>
+
+    </div>
+
+
+    <!-- КНИГИ -->
+
     <section class="library">
 
-        <article class="book">
-            <div class="cover">INHUMANE</div>
+
+        <!-- БЕСЧЕЛОВЕЧНОСТЬ -->
+
+        <article
+            class="book"
+            data-title="бесчеловечность леди горвхор"
+            data-category="horror splatterpunk"
+        >
+
+            <img
+                src="inhumane.jpg"
+                alt="Обложка книги Бесчеловечность"
+                class="cover"
+            >
 
             <div class="book-info">
-                <h3 class="book-title">Inhumane</h3>
-                <p class="author">Lady GoreWhxre</p>
+
+                <h3 class="book-title">
+                    Бесчеловечность
+                </h3>
+
+                <p class="author">
+                    Леди Горвхор
+                </p>
 
                 <div class="tags">
-                    <span class="tag">Splatterpunk</span>
-                    <span class="tag">Horror</span>
+
+                    <span class="tag">
+                        Хоррор
+                    </span>
+
+                    <span class="tag">
+                        Сплаттерпанк
+                    </span>
+
                 </div>
 
-                <button class="read">Читать</button>
+                <button class="read">
+                    Читать
+                </button>
+
             </div>
+
         </article>
 
-        <article class="book">
-            <div class="cover">COMING SOON</div>
+
+        <!-- СЛЕДУЮЩАЯ КНИГА -->
+
+        <article
+            class="book"
+            data-title="следующий перевод"
+            data-category="dark-romance"
+        >
+
+            <div class="coming-cover">
+                COMING<br>SOON
+            </div>
 
             <div class="book-info">
-                <h3 class="book-title">Следующий перевод</h3>
-                <p class="author">Скоро в библиотеке</p>
+
+                <h3 class="book-title">
+                    Следующий перевод
+                </h3>
+
+                <p class="author">
+                    Скоро в библиотеке
+                </p>
 
                 <div class="tags">
-                    <span class="tag">Dark Romance</span>
+
+                    <span class="tag">
+                        Дарк Романы
+                    </span>
+
                 </div>
 
-                <button class="read">Скоро</button>
+                <button class="read">
+                    Скоро
+                </button>
+
             </div>
+
         </article>
+
 
     </section>
 
 </main>
 
+
 <footer>
-    Inferno Books · 2026
+    INFERNO BOOKS · 2026
 </footer>
+
+
+<!-- =========================
+     ПОИСК + ФИЛЬТРЫ
+========================= -->
+
+<script>
+
+const books =
+    document.querySelectorAll(".book");
+
+const filters =
+    document.querySelectorAll(".filter");
+
+const search =
+    document.getElementById("search");
+
+let currentCategory = "all";
+
+
+function updateBooks() {
+
+    const query =
+        search.value
+        .toLowerCase()
+        .trim();
+
+    books.forEach(book => {
+
+        const title =
+            book.dataset.title;
+
+        const categories =
+            book.dataset.category;
+
+        const searchMatch =
+            title.includes(query);
+
+        const categoryMatch =
+            currentCategory === "all" ||
+            categories.includes(currentCategory);
+
+        if (searchMatch && categoryMatch) {
+
+            book.style.display = "";
+
+        } else {
+
+            book.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+filters.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        filters.forEach(item =>
+            item.classList.remove("active")
+        );
+
+        button.classList.add("active");
+
+        currentCategory =
+            button.dataset.category;
+
+        updateBooks();
+
+    });
+
+});
+
+
+search.addEventListener(
+    "input",
+    updateBooks
+);
+
+</script>
+
 
 </body>
 </html>
